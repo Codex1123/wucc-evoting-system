@@ -1,0 +1,7 @@
+/* ══ APPLY ══ */
+.apply-hero { background:linear-gradient(135deg,var(--cobalt) 0%,var(--ink-mid) 100%); padding:3.5rem 2rem; text-align:center; color:#fff; position:relative; overflow:hidden; }
+.apply-hero::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--coral),var(--coral-warm),var(--coral)); }
+.apply-form { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:2rem; box-shadow:var(--sh-md); }
+.fsl { font-family:'Fira Code',monospace; font-size:.59rem; text-transform:uppercase; letter-spacing:.2em; color:var(--cobalt); background:var(--cobalt-xs); border:1px solid var(--cobalt-soft); border-radius:5px; padding:.27rem .64rem; display:inline-block; margin:.85rem 0 .65rem; }
+.apply-suc { background:var(--white); border:1px solid var(--border); border-radius:var(--r-xl); padding:3rem 2rem; text-align:center; box-shadow:var(--sh-lg); display:none; }
+

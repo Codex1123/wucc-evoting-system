@@ -1,0 +1,241 @@
+/* ══ DASHBOARD ══ */
+.db-shell {
+  min-height: calc(100vh - 68px);
+  background:
+    linear-gradient(180deg,var(--cobalt-xs) 0%,var(--bg) 42%,var(--bg) 100%);
+}
+.db-topbar {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: .9rem clamp(1rem,3vw,2rem);
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+  position: sticky; top: 68px; z-index: 100;
+  box-shadow: 0 1px 0 var(--border);
+}
+.db-eyebrow {
+  font-family:'Fira Code',monospace;
+  font-size:.55rem;color:var(--hint);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:.2rem;
+}
+.db-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 1.25rem; color: var(--ink);
+}
+.db-actions { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+.db-live-pill {
+  display:flex;align-items:center;gap:.4rem;
+  background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.18);
+  padding:.35rem .75rem;border-radius:8px;
+}
+.db-live-pill span:last-child {
+  font-family:'Fira Code',monospace;font-size:.62rem;font-weight:700;color:#15803d;
+}
+.db-action-btn { padding:.42rem .9rem;font-size:.76rem; }
+.db-view-results-btn { padding:.3rem .7rem;font-size:.72rem; }
+.db-body { padding: clamp(1rem,3vw,1.8rem); max-width: 1400px; margin: 0 auto; }
+
+/* KPI Cards */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media(max-width:900px){ .kpi-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:540px){ .kpi-grid { grid-template-columns: 1fr; gap:.75rem; } }
+
+.kpi-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(12,15,30,.06);
+  display: flex; flex-direction: column; gap: .4rem;
+  position: relative; overflow: hidden;
+  transition: box-shadow .2s, transform .2s;
+}
+.kpi-card:hover { box-shadow: 0 8px 28px rgba(12,15,30,.1); transform: translateY(-2px); }
+.kpi-card::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+  background: var(--kpi-color, var(--cobalt));
+  border-radius: 0 0 10px 10px;
+}
+.kpi-top { display: flex; align-items: flex-start; justify-content: space-between; }
+.kpi-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+  background: var(--kpi-icon-bg, rgba(26,59,193,.1));
+  color: var(--kpi-color, var(--cobalt));
+}
+.kpi-label {
+  font-family: 'Fira Code', monospace;
+  font-size: .56rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--hint);
+}
+.kpi-value {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.75rem,4vw,2.2rem); line-height: 1;
+  color: var(--ink);
+}
+.kpi-sub {
+  font-size: .72rem; color: var(--muted);
+  display: flex; align-items: center; gap: .3rem;
+}
+.kpi-sub .up   { color: #15803d; }
+.kpi-sub .live { color: var(--cobalt); font-weight:700; font-family:'Fira Code',monospace; }
+
+/* Dashboard cards */
+.db-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(12,15,30,.05);
+  overflow: hidden;
+}
+.db-card-head {
+  padding: .9rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--border-soft);
+  display: flex; align-items: center; justify-content: space-between;
+  gap:.75rem;
+}
+.db-card-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: .94rem; color: var(--ink);
+  display: flex; align-items: center; gap: .5rem;
+}
+.db-card-body { padding: 1.3rem; }
+.chart-panel { position:relative; min-height:300px; }
+.chart-panel-bar { min-height:340px; }
+.turnout-panel {
+  min-height:280px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+
+/* Turnout ring */
+.turnout-wrap {
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: .5rem 0;
+  position: relative;
+  width:min(220px,68vw);
+  height:min(220px,68vw);
+}
+.turnout-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%,-50%);
+  text-align: center;
+  pointer-events: none;
+  width: 100%;
+}
+.turnout-pct {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(1.75rem,6vw,2.1rem); color: var(--cobalt); line-height: 1;
+}
+.turnout-lbl {
+  font-family: 'Fira Code', monospace;
+  font-size: .55rem; color: var(--hint);
+  text-transform: uppercase; letter-spacing: .08em;
+  margin-top: .2rem;
+}
+
+/* Leaders table */
+.leaders-table-wrap { overflow-x:auto; }
+.leaders-table { width:100%; border-collapse:collapse; font-size:.8rem; }
+.leaders-table th {
+  padding:.5rem .8rem; font-family:'Fira Code',monospace; font-size:.57rem;
+  text-transform:uppercase; letter-spacing:.07em; color:var(--hint);
+  border-bottom:2px solid var(--border); background:var(--border-soft); text-align:left;
+}
+.leaders-table td {
+  padding:.58rem .8rem; border-bottom:1px solid var(--border-soft);
+  vertical-align:middle;
+}
+.leaders-table tr:last-child td { border-bottom:none; }
+.leaders-table tr:hover td { background:var(--cobalt-xs); }
+.leader-av {
+  width:30px; height:30px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:.85rem; overflow:hidden; flex-shrink:0;
+}
+.leader-bar-wrap { display:flex; align-items:center; gap:.5rem; }
+.leader-bar-bg   { flex:1; height:5px; background:var(--border-soft); border-radius:100px; overflow:hidden; }
+.leader-bar-fill { height:100%; border-radius:100px; background:linear-gradient(90deg,var(--cobalt),var(--cobalt-lt)); }
+.activity-panel { max-height:340px; overflow-y:auto; }
+
+/* Activity feed */
+.act-row-v6 {
+  display:flex; align-items:flex-start; gap:.75rem;
+  padding:.6rem 0; border-bottom:1px solid var(--border-soft);
+}
+.act-row-v6:last-child { border-bottom:none; }
+.act-ic-v6 {
+  width:32px; height:32px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:.85rem;
+}
+.dbstat-v6 { background:var(--white); border:1px solid var(--border); border-radius:var(--r); padding:1.1rem 1.3rem; }
+.dbstat-n  { font-family:'DM Serif Display',serif; font-size:2rem; line-height:1; }
+.dbstat-l  { font-family:'Fira Code',monospace; font-size:.56rem; color:var(--hint); text-transform:uppercase; letter-spacing:.08em; margin-top:.2rem; }
+
+/* Live dot */
+.live-dot-pulse {
+  display:inline-block;width:8px;height:8px;border-radius:50%;
+  background:#22c55e;box-shadow:0 0 0 3px rgba(34,197,94,.2);
+  animation:dot-blink 1.4s infinite;
+}
+@keyframes dot-blink{ 0%,100%{opacity:1} 50%{opacity:.4} }
+
+@media(max-width:760px) {
+  .db-topbar { position:static; align-items:flex-start; }
+  .db-actions { width:100%; display:grid; grid-template-columns:1fr 1fr; }
+  .db-live-pill { grid-column:1/-1; justify-content:center; }
+  .db-action-btn { width:100%; }
+  .db-card-head { padding:.85rem 1rem; flex-wrap:wrap; }
+  .db-view-results-btn { width:100%; }
+  .db-card-body { padding:1rem; }
+  .chart-panel,.chart-panel-bar { min-height:260px; }
+  .leaders-table-wrap { overflow:visible; padding:.75rem; }
+  .leaders-table,.leaders-table thead,.leaders-table tbody,.leaders-table tr,.leaders-table td {
+    display:block; width:100%;
+  }
+  .leaders-table thead { display:none; }
+  .leaders-table tr {
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:.72rem;
+    margin-bottom:.75rem;
+    background:var(--white);
+  }
+  .leaders-table td {
+    border-bottom:0;
+    padding:.34rem 0;
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    text-align:right;
+  }
+  .leaders-table td::before {
+    content:attr(data-label);
+    font-family:'Fira Code',monospace;
+    font-size:.54rem;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--hint);
+    text-align:left;
+  }
+  .leaders-table td:first-child {
+    justify-content:flex-start;
+  }
+  .leaders-table td:first-child::before { display:none; }
+}
+
+@media(max-width:420px) {
+  .db-body { padding:.75rem; }
+  .db-title { font-size:1.08rem; }
+  .kpi-card { padding:1rem; }
+}

@@ -1,0 +1,142 @@
+
+
+/* ══════════════════════════════════════════════
+   WELLSPRING v6 · DEEP COBALT & SUNRISE
+   Pure white · Rich cobalt · Coral/orange pulse
+   "Government meets tech-startup. Unforgettable."
+══════════════════════════════════════════════ */
+:root {
+  --cobalt:       #1a3bc1;
+  --cobalt-mid:   #2448d6;
+  --cobalt-lt:    #3b5de8;
+  --cobalt-soft:  #e8edff;
+  --cobalt-xs:    #f2f5ff;
+
+  --coral:        #e84a1a;
+  --coral-mid:    #f05a28;
+  --coral-warm:   #ff7040;
+  --coral-soft:   #fff0eb;
+  --coral-xs:     #fff7f4;
+
+  --amber:        #e08800;
+  --amber-soft:   #fff8e6;
+
+  --teal:         #0891b2;
+  --teal-soft:    #e0f5f9;
+
+  --violet:       #6d28d9;
+  --violet-soft:  #ede9fe;
+
+  --ink:          #0c0f1e;
+  --ink-mid:      #1a1f3a;
+  --body:         #2d3354;
+  --muted:        #6b7294;
+  --hint:         #9ea4be;
+
+  --white:        #ffffff;
+  --bg:           #f8f9fe;
+  --panel:        #ffffff;
+  --border:       #e2e5f0;
+  --border-soft:  #f0f2fa;
+  --line:         #e2e5f0;
+
+  --sh-xs: 0 1px 4px rgba(12,15,30,.06);
+  --sh-sm: 0 2px 12px rgba(12,15,30,.08);
+  --sh-md: 0 6px 28px rgba(12,15,30,.10);
+  --sh-lg: 0 16px 52px rgba(12,15,30,.12);
+  --sh-xl: 0 28px 72px rgba(12,15,30,.14);
+
+  --r:    10px;
+  --r-lg: 16px;
+  --r-xl: 22px;
+}
+
+html.theme-dark {
+  --cobalt:       #6f8cff;
+  --cobalt-mid:   #88a0ff;
+  --cobalt-lt:    #a7b8ff;
+  --cobalt-soft:  rgba(111,140,255,.24);
+  --cobalt-xs:    rgba(111,140,255,.12);
+
+  --coral:        #ff7348;
+  --coral-mid:    #ff8a64;
+  --coral-warm:   #ff9d7c;
+  --coral-soft:   rgba(255,115,72,.16);
+  --coral-xs:     rgba(255,115,72,.08);
+
+  --amber-soft:   rgba(224,136,0,.16);
+  --teal-soft:    rgba(8,145,178,.18);
+  --violet-soft:  rgba(109,40,217,.18);
+
+  --ink:          #f4f7ff;
+  --ink-mid:      #dbe3ff;
+  --body:         #d6dbea;
+  --muted:        #aeb7cd;
+  --hint:         #818ba4;
+
+  --white:        #151a2b;
+  --bg:           #0b1020;
+  --panel:        #151a2b;
+  --border:       #2a3248;
+  --border-soft:  #1d2436;
+  --line:         #2a3248;
+
+  --sh-xs: 0 1px 4px rgba(0,0,0,.22);
+  --sh-sm: 0 2px 12px rgba(0,0,0,.28);
+  --sh-md: 0 6px 28px rgba(0,0,0,.32);
+  --sh-lg: 0 16px 52px rgba(0,0,0,.38);
+  --sh-xl: 0 28px 72px rgba(0,0,0,.45);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: var(--bg);
+  color: var(--body);
+  overflow-x: hidden;
+  transition:background .2s ease,color .2s ease;
+}
+.serif { font-family: 'DM Serif Display', serif; }
+.mono  { font-family: 'Fira Code', monospace; }
+
+html.theme-dark .cd-strip,
+html.theme-dark .adm-sidebar,
+html.theme-dark .timer-blk,
+html.theme-dark .explorer-hdr {
+  background:#0c0f1e;
+}
+
+html.theme-dark .res-top {
+  background:linear-gradient(135deg,#0c0f1e 0%,#1f3474 62%,#075f73 100%);
+}
+
+html.theme-dark .about-hero {
+  background:linear-gradient(135deg,#0c0f1e 0%,#1f3474 60%,#324aa5 100%);
+}
+
+html.theme-dark .apply-hero {
+  background:linear-gradient(135deg,#243c96 0%,#0c0f1e 100%);
+}
+
+html.theme-dark .fi,
+html.theme-dark .add-inp {
+  color-scheme:dark;
+}
+
+html.theme-dark .cfm-tick {
+  background:rgba(21,128,61,.16);
+}
+
+html.theme-dark .btn-green:hover,
+html.theme-dark .abtn-ok:hover {
+  background:rgba(21,128,61,.18);
+}
+
+html.theme-dark .abtn-rej:hover {
+  background:rgba(185,28,28,.18);
+}
+
+html.theme-dark .abtn-rm:hover {
+  background:var(--border-soft);
+}
