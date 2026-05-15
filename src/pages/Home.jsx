@@ -67,9 +67,9 @@ export default function Home({ data }) {
           <p className="home-subtitle">
             A clean, auditable election portal for candidate applications, secure voter access, PBFT-style validation, and immutable result tracking.
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Link to="/apply" className="btn-primary bg-[#e84a1a] hover:bg-[#c93d13]"><FileCheck2 size={18} />Apply as candidate</Link>
-            <Link to="/login" className="btn-secondary border-brand-200 bg-white text-brand-700 hover:bg-brand-50"><LockKeyhole size={18} />Secure login</Link>
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+            <Link to="/apply" className="btn-primary w-full bg-[#e84a1a] hover:bg-[#c93d13] sm:w-auto"><FileCheck2 size={18} />Apply as candidate</Link>
+            <Link to="/login" className="btn-secondary w-full border-brand-200 bg-white text-brand-700 hover:bg-brand-50 sm:w-auto"><LockKeyhole size={18} />Secure login</Link>
           </div>
         </div>
 
@@ -137,7 +137,7 @@ export default function Home({ data }) {
           <h2>Ready to contest for a WUCC office?</h2>
           <p>Submit your application for admin review. Approved candidates are automatically made available for voting.</p>
         </div>
-        <Link to="/apply" className="btn-primary bg-white text-brand-700 hover:bg-brand-50"><CheckCircle2 size={18} />Apply as candidate</Link>
+        <Link to="/apply" className="btn-primary w-full bg-white text-brand-700 hover:bg-brand-50 sm:w-auto"><CheckCircle2 size={18} />Apply as candidate</Link>
       </section>
     </section>
   );
