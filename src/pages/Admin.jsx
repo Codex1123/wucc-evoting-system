@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import { Blocks, Check, Copy, Eye, EyeOff, FileText, KeyRound, Loader2, Play, PlusCircle, RefreshCcw, Save, Search, ShieldCheck, Square, Trash2, UserPlus, UserRound, X } from 'lucide-react';
 import ConfirmModal from '../components/ConfirmModal';
 import StatusMessage from '../components/StatusMessage';
@@ -55,25 +55,38 @@ function validateTemporaryPassword(password, voter) {
   return '';
 }
 
-function CandidateReviewPhoto({ candidate, photoCache, onPhotoState }) {
+const CandidateReviewPhoto = memo(function CandidateReviewPhoto({ candidate, photoCache, onPhotoState }) {
   const url = candidate?.photo_url || '';
-  const state = url ? photoCache[url] : null;
+  const state = url ? photoCache[url]?.status : null;
   const loaded = state === 'loaded';
   const failed = state === 'error';
+  const slow = state === 'slow';
 
   return (
-    <div className="relative h-44 overflow-hidden rounded-lg bg-slate-100 ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700">
+    <div className="relative w-full overflow-hidden rounded-xl bg-slate-100 ring-1 ring-slate-200 dark:bg-slate-800 dark:ring-slate-700 min-h-[220px] max-h-[320px] md:min-h-[280px] md:max-h-[420px]">
       {url && !failed ? (
         <>
-          {!loaded && <div className="absolute inset-0 animate-pulse bg-slate-200 dark:bg-slate-700" />}
+          {!loaded && (
+            <div className="absolute inset-0 animate-pulse bg-slate-200 dark:bg-slate-700">
+              <div className="grid h-full place-items-center text-xs font-semibold text-slate-500 dark:text-slate-300">
+                Loading photo...
+              </div>
+            </div>
+          )}
           <img
             src={url}
             alt={candidate.full_name}
             loading="lazy"
-            className={`h-full w-full object-cover transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
+            decoding="async"
+            className={`h-full max-h-[420px] w-full object-contain transition-opacity duration-200 ${loaded ? 'opacity-100' : 'opacity-0'}`}
             onLoad={() => onPhotoState(url, 'loaded')}
             onError={() => onPhotoState(url, 'error')}
           />
+          {slow && !loaded && (
+            <div className="absolute inset-0 grid place-items-center bg-slate-100/90 text-sm font-semibold text-slate-600 dark:bg-slate-900/90 dark:text-slate-200">
+              Photo is taking longer than usual...
+            </div>
+          )}
         </>
       ) : (
         <div className="grid h-full place-items-center text-slate-500">
@@ -85,7 +98,7 @@ function CandidateReviewPhoto({ candidate, photoCache, onPhotoState }) {
       )}
     </div>
   );
-}
+});
 
 export default function Admin({ data }) {
   const { profile } = useAuth();
@@ -222,10 +235,36 @@ export default function Admin({ data }) {
   }
 
   const reviewCandidate = candidateRows.find((row) => row.row_id === reviewRowId) || null;
+  const reviewPhotoUrl = reviewCandidate?.photo_url || '';
+
   const markCandidatePhotoState = (url, state) => {
     if (!url) return;
-    setCandidatePhotoCache((current) => (current[url] === state ? current : { ...current, [url]: state }));
+    setCandidatePhotoCache((current) => {
+      const currentEntry = current[url] || { status: 'idle', resolvedUrl: url };
+      if (currentEntry.status === state) return current;
+      return { ...current, [url]: { ...currentEntry, status: state } };
+    });
   };
+
+  useEffect(() => {
+    if (!reviewPhotoUrl) return undefined;
+    setCandidatePhotoCache((current) => {
+      if (current[reviewPhotoUrl]?.resolvedUrl) return current;
+      return {
+        ...current,
+        [reviewPhotoUrl]: { status: current[reviewPhotoUrl]?.status || 'idle', resolvedUrl: reviewPhotoUrl }
+      };
+    });
+    const reviewUrl = reviewPhotoUrl;
+    const timer = window.setTimeout(() => {
+      setCandidatePhotoCache((current) => {
+        const entry = current[reviewUrl];
+        if (!entry || entry.status === 'loaded' || entry.status === 'error') return current;
+        return { ...current, [reviewUrl]: { ...entry, status: 'slow' } };
+      });
+    }, 4500);
+    return () => window.clearTimeout(timer);
+  }, [reviewPhotoUrl]);
 
   function updateCandidateRowStatus(row, status) {
     const reason = status === 'rejected' ? window.prompt('Enter rejection reason for this candidate:') || '' : '';
@@ -1144,7 +1183,11 @@ export default function Admin({ data }) {
             <button className="btn-secondary px-3 py-2" onClick={() => setReviewRowId(null)}>Close</button>
           </div>
           <div className="grid gap-5 lg:grid-cols-[180px_1fr]">
-            <CandidateReviewPhoto candidate={reviewCandidate} photoCache={candidatePhotoCache} onPhotoState={markCandidatePhotoState} />
+            <CandidateReviewPhoto
+              candidate={{ ...reviewCandidate, photo_url: candidatePhotoCache[reviewPhotoUrl]?.resolvedUrl || reviewPhotoUrl }}
+              photoCache={candidatePhotoCache}
+              onPhotoState={markCandidatePhotoState}
+            />
             <div className="space-y-4">
               <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
                 {[
