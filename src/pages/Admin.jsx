@@ -28,6 +28,15 @@ function compactDate(value) {
   return value ? new Date(value).toLocaleString() : 'N/A';
 }
 
+function MobileDetail({ label, value }) {
+  return (
+    <div>
+      <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400">{label}</p>
+      <p className="mt-0.5 break-words text-sm font-medium text-slate-800 dark:text-slate-100">{value || 'N/A'}</p>
+    </div>
+  );
+}
+
 function generateTemporaryPassword() {
   const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
   const values = new Uint32Array(6);
@@ -570,7 +579,27 @@ export default function Admin({ data }) {
             <h2 className="text-lg font-bold">Pending voter registration</h2>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingVoters.length} pending</span>
           </div>
-          <div className="w-full max-w-full overflow-hidden">
+          <div className="space-y-3 md:hidden">
+            {passwordResetRequests.slice(0, 10).map((request) => {
+              const voter = request.voters || {};
+              return (
+              <div key={`mobile-reset-${request.id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                <div className="grid grid-cols-2 gap-3">
+                  <MobileDetail label="Name" value={voter.full_name || 'Approved voter'} />
+                  <MobileDetail label="Matric" value={voter.matric} />
+                  <MobileDetail label="Department" value={voter.department} />
+                  <MobileDetail label="Requested" value={compactDate(request.created_at)} />
+                  <MobileDetail label="Status" value={request.status} />
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
+                </div>
+              </div>
+              );
+            })}
+          </div>
+          <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
               className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
@@ -595,7 +624,7 @@ export default function Admin({ data }) {
               </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
               Swipe left/right to view all columns and actions.
             </p>
           </div>
@@ -611,7 +640,25 @@ export default function Admin({ data }) {
             </div>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingPasswordResetRequests.length} pending</span>
           </div>
-          <div className="w-full max-w-full overflow-hidden">
+          <div className="space-y-3 md:hidden">
+            {pendingVoters.map((voter) => (
+              <div key={`mobile-pending-${voter.id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                <div className="grid grid-cols-2 gap-3">
+                  <MobileDetail label="Name" value={voter.full_name} />
+                  <MobileDetail label="Matric" value={voter.matric} />
+                  <MobileDetail label="Department" value={voter.department} />
+                  <MobileDetail label="Level" value={voter.level} />
+                  <MobileDetail label="Email" value={voter.email} />
+                  <MobileDetail label="Status" value={voter.status} />
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
               className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
@@ -640,7 +687,7 @@ export default function Admin({ data }) {
               </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
               Swipe left/right to view all columns and actions.
             </p>
           </div>
@@ -684,7 +731,7 @@ export default function Admin({ data }) {
               </p>
             )}
           </div>
-          <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all voter columns.</p>
+          <p className="mt-2 hidden text-xs font-medium text-slate-500 dark:text-slate-400">Swipe horizontally to view all voter columns.</p>
         </div>
         )}
 
@@ -749,7 +796,25 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('voters')}><Eye size={15} />View all voters</button>
             </div>
           </div>
-          <div className="w-full max-w-full overflow-hidden">
+          <div className="space-y-3 md:hidden">
+            {pendingVoters.map((voter) => (
+              <div key={`mobile-pending-${voter.id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                <div className="grid grid-cols-2 gap-3">
+                  <MobileDetail label="Name" value={voter.full_name} />
+                  <MobileDetail label="Matric" value={voter.matric} />
+                  <MobileDetail label="Department" value={voter.department} />
+                  <MobileDetail label="Level" value={voter.level} />
+                  <MobileDetail label="Email" value={voter.email} />
+                  <MobileDetail label="Status" value={voter.status} />
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
               className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
@@ -782,7 +847,7 @@ export default function Admin({ data }) {
               </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
               Swipe left/right to view all columns and actions.
             </p>
           </div>
@@ -797,7 +862,25 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('candidates')}><Eye size={15} />View all candidates</button>
             </div>
           </div>
-          <div className="w-full max-w-full overflow-hidden">
+          <div className="space-y-3 md:hidden">
+            {pendingVoters.map((voter) => (
+              <div key={`mobile-pending-${voter.id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                <div className="grid grid-cols-2 gap-3">
+                  <MobileDetail label="Name" value={voter.full_name} />
+                  <MobileDetail label="Matric" value={voter.matric} />
+                  <MobileDetail label="Department" value={voter.department} />
+                  <MobileDetail label="Level" value={voter.level} />
+                  <MobileDetail label="Email" value={voter.email} />
+                  <MobileDetail label="Status" value={voter.status} />
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2">
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
               className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
@@ -834,7 +917,7 @@ export default function Admin({ data }) {
               </tbody>
               </table>
             </div>
-            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+            <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
               Swipe left/right to view all columns and actions.
             </p>
           </div>
@@ -874,11 +957,31 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="w-full max-w-full overflow-hidden">
-              <div
-                className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
-                style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
-              >
+          <div className="w-full max-w-full overflow-hidden">
+            <div className="space-y-3 md:hidden">
+              {!dataLoading && recentVoters.map((voter) => (
+                <div key={`mobile-voter-${voter.id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                  <div className="grid grid-cols-2 gap-3">
+                    <MobileDetail label="Name" value={voter.full_name} />
+                    <MobileDetail label="Matric" value={voter.matric} />
+                    <MobileDetail label="Department" value={voter.department} />
+                    <MobileDetail label="Level" value={voter.level} />
+                    <MobileDetail label="Email" value={voter.email} />
+                    <MobileDetail label="Status" value={voter.status} />
+                  </div>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
+                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
+                    <button className="btn-danger col-span-2 min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)}><Trash2 size={15} />Remove</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="hidden md:block">
+            <div
+              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
+            >
                 <table className="table admin-wide-table table-fixed">
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
@@ -901,9 +1004,10 @@ export default function Admin({ data }) {
                     </tr>
                   ))}
                 </tbody>
-                </table>
-              </div>
-              <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              </table>
+            </div>
+            </div>
+              <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
                 Swipe left/right to view all columns and actions.
               </p>
             </div>
@@ -958,11 +1062,34 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="w-full max-w-full overflow-hidden">
-              <div
-                className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
-                style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
-              >
+          <div className="w-full max-w-full overflow-hidden">
+            <div className="space-y-3 md:hidden">
+              {!dataLoading && recentCandidateRows.map((row) => (
+                <div key={`mobile-candidate-${row.row_id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
+                  <div className="grid grid-cols-2 gap-3">
+                    <MobileDetail label="Name" value={row.full_name} />
+                    <MobileDetail label="Matric" value={row.matric} />
+                    <MobileDetail label="Position" value={positionLabel(row.position_id)} />
+                    <MobileDetail label="Department" value={row.department} />
+                    <MobileDetail label="Level" value={row.level} />
+                    <MobileDetail label="CGPA" value={row.cgpa} />
+                    <MobileDetail label="Status" value={row.status} />
+                    <MobileDetail label="Source" value={row.source} />
+                  </div>
+                  <div className="mt-3 grid grid-cols-2 gap-2">
+                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
+                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
+                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
+                    <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)}><Trash2 size={15} />Remove</button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="hidden md:block">
+            <div
+              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
+            >
                 <table className="table admin-wide-table table-fixed">
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
@@ -988,9 +1115,10 @@ export default function Admin({ data }) {
                     </tr>
                   ))}
                 </tbody>
-                </table>
-              </div>
-              <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              </table>
+            </div>
+            </div>
+              <p className="mt-2 hidden text-xs font-semibold text-slate-500 dark:text-slate-400 md:block">
                 Swipe left/right to view all columns and actions.
               </p>
             </div>
