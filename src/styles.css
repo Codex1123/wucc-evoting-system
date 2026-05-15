@@ -391,6 +391,20 @@ button, input, select, textarea {
 }
 
 @layer utilities {
+  .scroll-x-visible::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .scroll-x-visible::-webkit-scrollbar-track {
+    background: rgba(148, 163, 184, 0.2);
+    border-radius: 999px;
+  }
+
+  .scroll-x-visible::-webkit-scrollbar-thumb {
+    background: rgba(59, 130, 246, 0.8);
+    border-radius: 999px;
+  }
+
   .table-wrap {
     -webkit-overflow-scrolling: touch;
     scrollbar-width: thin;

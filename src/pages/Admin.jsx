@@ -570,8 +570,12 @@ export default function Admin({ data }) {
             <h2 className="text-lg font-bold">Pending voter registration</h2>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingVoters.length} pending</span>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <table className="table min-w-[1200px] w-max">
+          <div className="w-full max-w-full">
+            <div
+              className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+            >
+              <table className="table w-[1200px] min-w-[1200px] table-fixed">
               <thead><tr><th>Name</th><th>Matric</th><th>Email</th><th>Department</th><th>Action</th></tr></thead>
               <tbody>
                 {pendingVoters.map((voter) => (
@@ -589,7 +593,11 @@ export default function Admin({ data }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
+            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              Swipe left/right to view all columns and actions.
+            </p>
           </div>
         </div>
       )}
@@ -603,8 +611,12 @@ export default function Admin({ data }) {
             </div>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingPasswordResetRequests.length} pending</span>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <table className="table min-w-[1200px] w-max">
+          <div className="w-full max-w-full">
+            <div
+              className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+            >
+              <table className="table w-[1200px] min-w-[1200px] table-fixed">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
@@ -626,7 +638,11 @@ export default function Admin({ data }) {
                   );
                 })}
               </tbody>
-            </table>
+              </table>
+            </div>
+            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              Swipe left/right to view all columns and actions.
+            </p>
           </div>
         </div>
       )}
@@ -733,8 +749,12 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('voters')}><Eye size={15} />View all voters</button>
             </div>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <table className="table min-w-[1200px] w-max">
+          <div className="w-full max-w-full">
+            <div
+              className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+            >
+              <table className="table w-[1200px] min-w-[1200px] table-fixed">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -760,7 +780,11 @@ export default function Admin({ data }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
+            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              Swipe left/right to view all columns and actions.
+            </p>
           </div>
         </div>
         )}
@@ -773,8 +797,12 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('candidates')}><Eye size={15} />View all candidates</button>
             </div>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
-            <table className="table min-w-[1200px] w-max">
+          <div className="w-full max-w-full">
+            <div
+              className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+            >
+              <table className="table w-[1200px] min-w-[1200px] table-fixed">
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -804,9 +832,12 @@ export default function Admin({ data }) {
                   </tr>
                 ))}
               </tbody>
-            </table>
+              </table>
+            </div>
+            <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+              Swipe left/right to view all columns and actions.
+            </p>
           </div>
-          <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all candidate columns.</p>
         </div>
       </div>
 
@@ -843,8 +874,12 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 w-full max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
-              <table className="table min-w-[900px]">
+            <div className="w-full max-w-full">
+              <div
+                className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+                style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+              >
+                <table className="table w-[1200px] min-w-[1200px] table-fixed">
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
                   {filteredVoters.length === 0 && <tr><td colSpan={7}><div className="py-8 text-center text-sm text-slate-500">No voters match these filters.</div></td></tr>}
@@ -866,9 +901,12 @@ export default function Admin({ data }) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+                </table>
+              </div>
+              <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                Swipe left/right to view all columns and actions.
+              </p>
             </div>
-            <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all voter columns.</p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {voterPage} of {voterPageCount}</span>
               <div className="flex gap-2">
@@ -920,8 +958,12 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 w-full max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
-              <table className="table min-w-[1180px]">
+            <div className="w-full max-w-full">
+              <div
+                className="scroll-x-visible relative w-full max-w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-200/20"
+                style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x' }}
+              >
+                <table className="table w-[1200px] min-w-[1200px] table-fixed">
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
                   {filteredCandidateRows.length === 0 && <tr><td colSpan={9}><div className="py-8 text-center text-sm text-slate-500">No candidates match these filters.</div></td></tr>}
@@ -946,9 +988,12 @@ export default function Admin({ data }) {
                     </tr>
                   ))}
                 </tbody>
-              </table>
+                </table>
+              </div>
+              <p className="mt-2 text-xs font-semibold text-slate-500 dark:text-slate-400">
+                Swipe left/right to view all columns and actions.
+              </p>
             </div>
-            <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all candidate columns.</p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {candidatePage} of {candidatePageCount}</span>
               <div className="flex gap-2">
