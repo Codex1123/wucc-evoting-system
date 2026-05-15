@@ -36,8 +36,8 @@ export default function Navbar({ election, theme, onToggleTheme }) {
           {showResults && <NavLink className={navClass} to="/results"><BarChart3 size={17} />Results</NavLink>}
           {admin && <NavLink className={navClass} to="/history"><Archive size={17} />History</NavLink>}
           {(!admin && (!profile || (approvedVoter && !mustChangePassword))) && <NavLink className={navClass} to="/verify"><FileSearch size={17} />Verify</NavLink>}
-          {!profile && applicationsOpen && <NavLink className={navClass} to="/apply"><UserRoundCheck size={17} />Apply</NavLink>}
-          {!profile && <NavLink className={navClass} to="/login"><LogIn size={17} />Login</NavLink>}
+          {!profile && applicationsOpen && <NavLink className={({ isActive }) => `${navClass({ isActive })} mobile-auth-link`} to="/apply"><UserRoundCheck size={17} />Apply</NavLink>}
+          {!profile && <NavLink className={({ isActive }) => `${navClass({ isActive })} mobile-auth-link`} to="/login"><LogIn size={17} />Login</NavLink>}
           {['superadmin', 'commissioner'].includes(role) && <NavLink className={navClass} to="/admin"><UserRoundCheck size={17} />Admin</NavLink>}
         </nav>
         <div className="navbar-actions flex min-w-0 shrink-0 items-center gap-2">

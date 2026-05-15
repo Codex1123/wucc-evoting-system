@@ -633,23 +633,23 @@ export default function Admin({ data }) {
 
       <div className="grid gap-5 lg:grid-cols-[420px_1fr]">
         {perms.canControlElection && (
-        <div className="card p-5">
-          <div className="flex items-center justify-between gap-3">
+        <div className="card max-w-full overflow-hidden p-5">
+          <div className="flex flex-wrap items-center justify-between gap-3">
             <h2 className="text-lg font-bold">Election control</h2>
             <span className={`badge ${getPhaseBadgeClass(phase)}`}>
               {getPhaseLabel(phase)}
             </span>
           </div>
-          <div className="mt-4 space-y-4">
-            <label><span className="label">Election title</span><input className="input" disabled={!perms.canEditElectionSettings} value={settings.title} onChange={(e) => setSettings({ ...settings, title: e.target.value })} /></label>
-            <label><span className="label">Start date</span><input type="datetime-local" className="input" disabled={!perms.canEditElectionSettings} value={settings.startsAt} onChange={(e) => setSettings({ ...settings, startsAt: e.target.value })} /></label>
-            <label><span className="label">End date</span><input type="datetime-local" className="input" disabled={!perms.canEditElectionSettings} value={settings.endsAt} onChange={(e) => setSettings({ ...settings, endsAt: e.target.value })} /></label>
+          <div className="mt-4 space-y-5">
+            <label className="block w-full"><span className="label">Election title</span><input className="input w-full" disabled={!perms.canEditElectionSettings} value={settings.title} onChange={(e) => setSettings({ ...settings, title: e.target.value })} /></label>
+            <label className="block w-full"><span className="label">Start date</span><input type="datetime-local" className="input w-full" disabled={!perms.canEditElectionSettings} value={settings.startsAt} onChange={(e) => setSettings({ ...settings, startsAt: e.target.value })} /></label>
+            <label className="block w-full"><span className="label">End date</span><input type="datetime-local" className="input w-full" disabled={!perms.canEditElectionSettings} value={settings.endsAt} onChange={(e) => setSettings({ ...settings, endsAt: e.target.value })} /></label>
             {perms.role === 'commissioner' && (
               <p className="rounded-lg bg-emerald-50 p-3 text-sm font-semibold text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">
                 Commissioner controls are limited to start, pause, end, approvals, and monitoring. Finalization and new election cycles remain Super Admin controls.
               </p>
             )}
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3 pt-1">
               <button className="btn-primary" disabled={!canStartElection} onClick={() => run(() => saveElectionSettings(startPayload()), 'Election started. Voting is enabled and ledger is open.')}><Play size={17} />Start</button>
               <button className="btn-secondary" disabled={!canEndElection} onClick={() => run(() => saveElectionSettings(endPayload()), 'Election ended. Voting is disabled and ledger remains reviewable.')}><Square size={17} />End</button>
               {perms.canEditElectionSettings && <button className="btn-secondary" disabled={!canEditElectionSettings} onClick={() => run(() => saveElectionSettings(settingsPayload(election?.status || 'inactive')), 'Election settings saved.')}><Save size={17} />Save</button>}
@@ -841,7 +841,7 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 overflow-auto">
+            <div className="table-wrap min-h-0 max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
               <table className="table min-w-[980px]">
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
@@ -866,6 +866,7 @@ export default function Admin({ data }) {
                 </tbody>
               </table>
             </div>
+            <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all voter columns.</p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {voterPage} of {voterPageCount}</span>
               <div className="flex gap-2">
@@ -917,7 +918,7 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 overflow-auto">
+            <div className="table-wrap min-h-0 max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
               <table className="table min-w-[1180px]">
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
@@ -945,6 +946,7 @@ export default function Admin({ data }) {
                 </tbody>
               </table>
             </div>
+            <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all candidate columns.</p>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {candidatePage} of {candidatePageCount}</span>
               <div className="flex gap-2">
