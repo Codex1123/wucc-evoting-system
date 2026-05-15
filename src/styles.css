@@ -80,7 +80,17 @@ button, input, select, textarea {
   }
 
   .table-wrap {
-    @apply w-full max-w-full overflow-x-auto rounded-lg border border-slate-200 dark:border-slate-800;
+    @apply w-full max-w-full overflow-x-auto overflow-y-hidden rounded-lg border border-slate-200 dark:border-slate-800;
+    scrollbar-gutter: stable both-edges;
+  }
+
+  .table-wrap::-webkit-scrollbar {
+    height: 8px;
+  }
+
+  .table-wrap::-webkit-scrollbar-thumb {
+    background-color: rgba(100, 116, 139, 0.6);
+    border-radius: 9999px;
   }
 
   .table {
@@ -434,8 +444,9 @@ button, input, select, textarea {
       order: 3;
       width: 100%;
       max-width: 100%;
-      flex-wrap: wrap;
-      overflow: hidden;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
 
     .navbar-nav a {
@@ -563,9 +574,9 @@ button, input, select, textarea {
     }
 
     .navbar-nav .mobile-auth-link {
-      flex: 1 1 calc(50% - 0.25rem);
+      flex: 0 0 auto;
       justify-content: center;
-      min-width: 0;
+      min-width: max-content;
     }
 
     main.mx-auto {

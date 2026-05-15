@@ -26,9 +26,9 @@ export default function Navbar({ election, theme, onToggleTheme }) {
   const applicationsOpen = ['inactive', 'standby'].includes(electionStatus) && election?.candidate_applications_open !== false;
   return (
     <header className="sticky top-0 z-30 w-full max-w-full overflow-hidden border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
-      <div className="navbar-shell mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 overflow-hidden px-4 py-3 lg:px-6">
+      <div className="navbar-shell mx-auto flex w-full max-w-7xl flex-wrap items-center justify-between gap-3 overflow-hidden px-4 py-3 lg:flex-nowrap lg:px-6">
         <Link className="navbar-logo min-w-0 shrink-0" to="/"><Logo /></Link>
-        <nav className="navbar-nav flex min-w-0 flex-1 max-w-full flex-wrap items-center gap-1 overflow-hidden lg:flex-none" aria-label="Primary navigation">
+        <nav className="navbar-nav flex min-w-0 max-w-full flex-1 items-center gap-1 overflow-x-auto overflow-y-hidden whitespace-nowrap pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:max-w-none lg:flex-none lg:overflow-visible lg:whitespace-normal" aria-label="Primary navigation">
           {!profile && <NavLink className={navClass} to="/"><LayoutDashboard size={17} />Home</NavLink>}
           {admin && <NavLink className={navClass} to="/dashboard"><LayoutDashboard size={17} />Dashboard</NavLink>}
           {voterNav && <NavLink className={navClass} to="/dashboard"><LayoutDashboard size={17} />Dashboard</NavLink>}
