@@ -28,7 +28,7 @@ export default function Navbar({ election, theme, onToggleTheme }) {
     <header className="sticky top-0 z-30 border-b border-slate-200 bg-white/90 backdrop-blur dark:border-slate-800 dark:bg-slate-950/90">
       <div className="navbar-shell mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-3 px-4 py-3 lg:px-6">
         <Link className="navbar-logo min-w-0 shrink-0" to="/"><Logo /></Link>
-        <nav className="navbar-nav flex min-w-0 flex-wrap items-center gap-1">
+        <nav className="navbar-nav flex min-w-0 flex-1 flex-wrap items-center gap-1 lg:flex-none" aria-label="Primary navigation">
           {!profile && <NavLink className={navClass} to="/"><LayoutDashboard size={17} />Home</NavLink>}
           {admin && <NavLink className={navClass} to="/dashboard"><LayoutDashboard size={17} />Dashboard</NavLink>}
           {voterNav && <NavLink className={navClass} to="/dashboard"><LayoutDashboard size={17} />Dashboard</NavLink>}
@@ -40,7 +40,7 @@ export default function Navbar({ election, theme, onToggleTheme }) {
           {!profile && <NavLink className={navClass} to="/login"><LogIn size={17} />Login</NavLink>}
           {['superadmin', 'commissioner'].includes(role) && <NavLink className={navClass} to="/admin"><UserRoundCheck size={17} />Admin</NavLink>}
         </nav>
-        <div className="navbar-actions flex shrink-0 items-center gap-2">
+        <div className="navbar-actions flex min-w-0 shrink-0 items-center gap-2">
           <span className={`badge ${active ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-200' : 'bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-300'}`}>
             <span className={`h-2 w-2 rounded-full ${active ? 'bg-emerald-500' : 'bg-slate-400'}`} />
             {active ? 'Active' : 'Inactive'}
