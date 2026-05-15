@@ -570,8 +570,8 @@ export default function Admin({ data }) {
             <h2 className="text-lg font-bold">Pending voter registration</h2>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingVoters.length} pending</span>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain">
-            <table className="table min-w-[900px]">
+          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <table className="table min-w-[1200px] w-max">
               <thead><tr><th>Name</th><th>Matric</th><th>Email</th><th>Department</th><th>Action</th></tr></thead>
               <tbody>
                 {pendingVoters.map((voter) => (
@@ -603,8 +603,8 @@ export default function Admin({ data }) {
             </div>
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingPasswordResetRequests.length} pending</span>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain">
-            <table className="table min-w-[900px]">
+          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <table className="table min-w-[1200px] w-max">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
@@ -733,8 +733,8 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('voters')}><Eye size={15} />View all voters</button>
             </div>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain">
-            <table className="table min-w-[900px]">
+          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <table className="table min-w-[1200px] w-max">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -773,8 +773,8 @@ export default function Admin({ data }) {
               <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('candidates')}><Eye size={15} />View all candidates</button>
             </div>
           </div>
-          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain">
-            <table className="table min-w-[900px]">
+          <div className="table-wrap w-full max-w-full overflow-x-auto overflow-y-hidden touch-pan-x overscroll-x-contain rounded-xl" style={{ WebkitOverflowScrolling: 'touch' }}>
+            <table className="table min-w-[1200px] w-max">
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
