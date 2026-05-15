@@ -129,7 +129,7 @@ function LedgerModal({ election, ledger, loading, onClose }) {
         </div>
         {loading ? <SkeletonBlock className="h-72" /> : (
           <div className="table-wrap">
-            <table className="table">
+            <table className="table min-w-[900px]">
               <thead><tr><th>Block</th><th>Receipt hash</th><th>Block hash</th><th>PBFT status</th><th>Timestamp</th></tr></thead>
               <tbody>
                 {ledger.length ? ledger.map((block) => (

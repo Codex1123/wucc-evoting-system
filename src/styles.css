@@ -434,7 +434,7 @@ button, input, select, textarea {
     }
 
     main {
-      overflow-x: clip;
+      overflow-x: visible;
     }
   }
 

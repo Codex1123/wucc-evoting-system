@@ -507,7 +507,7 @@ export default function Admin({ data }) {
           </div>
         </div>
         <div className="table-wrap">
-          <table className="table">
+          <table className="table min-w-[900px]">
             <thead><tr><th>Block</th><th>Previous hash</th><th>Current hash</th><th>Receipt</th><th>Validators</th><th>Status</th><th>Timestamp</th><th></th></tr></thead>
             <tbody>
               {pagedLedger.length ? pagedLedger.map((block) => (
@@ -545,7 +545,7 @@ export default function Admin({ data }) {
           <span className="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{auditLogs.length} events</span>
         </div>
         <div className="table-wrap">
-          <table className="table">
+          <table className="table min-w-[900px]">
             <thead><tr><th>Time</th><th>Actor</th><th>Action</th><th>Record</th><th>Details</th></tr></thead>
             <tbody>
               {auditLogs.slice(0, 12).length ? auditLogs.slice(0, 12).map((log) => (
@@ -571,7 +571,7 @@ export default function Admin({ data }) {
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingVoters.length} pending</span>
           </div>
           <div className="table-wrap">
-            <table className="table">
+            <table className="table min-w-[900px]">
               <thead><tr><th>Name</th><th>Matric</th><th>Email</th><th>Department</th><th>Action</th></tr></thead>
               <tbody>
                 {pendingVoters.map((voter) => (
@@ -604,7 +604,7 @@ export default function Admin({ data }) {
             <span className="badge bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100">{pendingPasswordResetRequests.length} pending</span>
           </div>
           <div className="table-wrap">
-            <table className="table">
+            <table className="table min-w-[900px]">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
@@ -733,7 +733,7 @@ export default function Admin({ data }) {
             </div>
           </div>
           <div className="table-wrap">
-            <table className="table">
+            <table className="table min-w-[900px]">
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -773,7 +773,7 @@ export default function Admin({ data }) {
             </div>
           </div>
           <div className="table-wrap">
-            <table className="table">
+            <table className="table min-w-[900px]">
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (

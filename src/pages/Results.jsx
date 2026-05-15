@@ -287,7 +287,7 @@ export default function Results({ data }) {
           <span className="badge bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">PBFT consortium validation</span>
         </div>
         <div className="table-wrap">
-          <table className="table">
+          <table className="table min-w-[900px]">
             <thead><tr><th>Block</th><th>Receipt hash</th><th>Block hash</th><th>Status</th><th>Timestamp</th></tr></thead>
             <tbody>
               {displayBallots.length ? displayBallots.map((ballot) => (
