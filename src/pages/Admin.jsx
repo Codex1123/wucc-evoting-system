@@ -668,6 +668,7 @@ export default function Admin({ data }) {
               </p>
             )}
           </div>
+          <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all voter columns.</p>
         </div>
         )}
 
@@ -805,6 +806,7 @@ export default function Admin({ data }) {
               </tbody>
             </table>
           </div>
+          <p className="mt-2 text-xs font-medium text-slate-500 dark:text-slate-400 sm:hidden">Swipe horizontally to view all candidate columns.</p>
         </div>
       </div>
 
@@ -841,8 +843,8 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
-              <table className="table min-w-[980px]">
+            <div className="table-wrap min-h-0 w-full max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
+              <table className="table min-w-[900px]">
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
                   {filteredVoters.length === 0 && <tr><td colSpan={7}><div className="py-8 text-center text-sm text-slate-500">No voters match these filters.</div></td></tr>}
@@ -918,7 +920,7 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-            <div className="table-wrap min-h-0 max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
+            <div className="table-wrap min-h-0 w-full max-w-full overflow-x-auto overflow-y-auto rounded-lg border border-slate-200 pb-2 dark:border-slate-800">
               <table className="table min-w-[1180px]">
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
