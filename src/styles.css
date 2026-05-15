@@ -383,6 +383,21 @@ button, input, select, textarea {
 @layer utilities {
   .table-wrap {
     -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(100, 116, 139, 0.8) transparent;
+  }
+
+  .table-wrap::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  .table-wrap::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .table-wrap::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: rgba(148, 163, 184, 0.9);
   }
 
   .table {
@@ -545,6 +560,12 @@ button, input, select, textarea {
       min-height: 2.25rem;
       padding: 0.45rem 0.65rem;
       font-size: 0.78rem;
+    }
+
+    .navbar-nav .mobile-auth-link {
+      flex: 1 1 calc(50% - 0.25rem);
+      justify-content: center;
+      min-width: 0;
     }
 
     main.mx-auto {
