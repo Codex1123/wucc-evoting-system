@@ -22,10 +22,46 @@ body {
 }
 
 html, body, #root {
+  width: 100%;
   max-width: 100%;
   overflow-x: hidden;
 }
 
+
+
+.admin-table-scroll {
+  display: block;
+  max-width: 100%;
+  overflow-x: scroll !important;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.admin-wide-table {
+  width: 1200px !important;
+  min-width: 1200px !important;
+  max-width: none !important;
+}
+
+.admin-table-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.admin-table-scroll::-webkit-scrollbar-track {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 999px;
+}
+
+.admin-table-scroll::-webkit-scrollbar-thumb {
+  background: rgba(59, 130, 246, 0.85);
+  border-radius: 999px;
+}
+
+.admin-table-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 246, 0.85) rgba(148, 163, 184, 0.25);
+}
 button, input, select, textarea {
   font: inherit;
 }
