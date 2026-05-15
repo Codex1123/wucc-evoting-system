@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../config/supabase';
 import { clearAuthStorage, getLinkedVoter, getProfile, getStoredVoterSession, hasPersistedAuthMarker, markAuthPersisted, signOut } from '../services/electionService';
 import { normalizeRole } from '../services/roles';
@@ -37,6 +38,7 @@ export function AuthProvider({ children }) {
   const refreshId = useRef(0);
   const warningTimer = useRef(null);
   const logoutTimer = useRef(null);
+  const navigate = useNavigate();
 
   const hardLogout = useCallback(async () => {
     setSessionWarning(false);
@@ -50,10 +52,10 @@ export function AuthProvider({ children }) {
       console.error('[auth] automatic logout failed', err);
     } finally {
       if (window.location.pathname !== '/login') {
-        window.location.assign('/login');
+        navigate('/login', { replace: true });
       }
     }
-  }, []);
+  }, [navigate]);
 
   const resetInactivityTimers = useCallback(() => {
     window.clearTimeout(warningTimer.current);
@@ -122,7 +124,7 @@ export function AuthProvider({ children }) {
     if (hasPersistedAuthMarker() && !sessionStorage.getItem(TAB_SESSION_KEY)) {
       clearAuthStorage();
       setLoading(false);
-      if (isProtectedPath(window.location.pathname)) window.location.assign('/login');
+      if (isProtectedPath(window.location.pathname)) navigate('/login', { replace: true });
       return undefined;
     }
     sessionStorage.setItem(TAB_SESSION_KEY, 'true');
@@ -219,9 +221,9 @@ export function AuthProvider({ children }) {
       setSession(null);
       setProfile(null);
       setVoter(null);
-      if (window.location.pathname !== '/login') window.location.assign('/login');
+      if (window.location.pathname !== '/login') navigate('/login', { replace: true });
     }
-  }), [session, profile, voter, loading]);
+  }), [session, profile, voter, loading, navigate]);
 
   return (
     <AuthContext.Provider value={value}>
