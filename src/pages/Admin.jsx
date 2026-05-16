@@ -28,6 +28,17 @@ function compactDate(value) {
   return value ? new Date(value).toLocaleString() : 'N/A';
 }
 
+const CANDIDATE_PHOTO_BUCKET = 'candidate-photos';
+
+function resolveCandidatePhotoUrl(photoUrl) {
+  const value = String(photoUrl || '').trim();
+  if (!value) return '';
+  if (/^https?:\/\//i.test(value) || value.startsWith('blob:') || value.startsWith('data:')) return value;
+  const base = String(import.meta.env.VITE_SUPABASE_URL || '').replace(/\/+$/, '');
+  if (!base) return value;
+  return `${base}/storage/v1/object/public/${CANDIDATE_PHOTO_BUCKET}/${value.replace(/^\/+/, '')}`;
+}
+
 function MobileDetail({ label, value }) {
   return (
     <div>
@@ -235,7 +246,7 @@ export default function Admin({ data }) {
   }
 
   const reviewCandidate = candidateRows.find((row) => row.row_id === reviewRowId) || null;
-  const reviewPhotoUrl = reviewCandidate?.photo_url || '';
+  const reviewPhotoUrl = useMemo(() => resolveCandidatePhotoUrl(reviewCandidate?.photo_url), [reviewCandidate?.photo_url]);
 
   const markCandidatePhotoState = (url, state) => {
     if (!url) return;
@@ -968,8 +979,8 @@ export default function Admin({ data }) {
       </div>
 
       {fullView === 'voters' && (
-        <div className="fixed inset-0 z-40 grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="card flex max-h-[92vh] w-full max-w-7xl flex-col p-5">
+        <div className="fixed inset-0 z-40 grid place-items-center overflow-hidden bg-slate-950/60 p-4 backdrop-blur-sm">
+          <div className="card flex max-h-[85vh] w-full max-w-[95vw] flex-col overflow-hidden p-5">
             <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-lg font-bold">All voters</h2>
@@ -1067,8 +1078,8 @@ export default function Admin({ data }) {
       )}
 
       {fullView === 'candidates' && (
-        <div className="fixed inset-0 z-40 grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
-          <div className="card flex max-h-[92vh] w-full max-w-7xl flex-col p-5">
+        <div className="fixed inset-0 z-40 grid place-items-center overflow-hidden bg-slate-950/60 p-4 backdrop-blur-sm">
+          <div className="card flex max-h-[85vh] w-full max-w-[95vw] flex-col overflow-hidden p-5">
             <div className="mb-4 flex flex-wrap items-start justify-between gap-3">
               <div>
                 <h2 className="text-lg font-bold">All candidates</h2>
@@ -1106,7 +1117,7 @@ export default function Admin({ data }) {
                 </select>
               </label>
             </div>
-          <div className="w-full max-w-full overflow-hidden">
+          <div className="w-full max-w-full flex-1 overflow-y-auto overflow-x-auto">
             <div className="space-y-3 md:hidden">
               {!dataLoading && recentCandidateRows.map((row) => (
                 <div key={`mobile-candidate-${row.row_id}`} className="rounded-xl border border-slate-200 bg-white p-4 dark:border-slate-700 dark:bg-slate-900">
@@ -1132,7 +1143,7 @@ export default function Admin({ data }) {
             <div className="hidden md:block">
             <div
               className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
-              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
+              style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100%' }}
             >
                 <table className="table admin-wide-table min-w-[1200px] table-fixed">
                 <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[180px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
