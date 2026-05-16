@@ -703,19 +703,20 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
+              <colgroup><col className="w-[210px]" /><col className="w-[130px]" /><col className="w-[180px]" /><col className="w-[170px]" /><col className="w-[130px]" /><col className="w-[260px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
                   const voter = request.voters || {};
                   return (
                     <tr key={request.id}>
-                      <td>{voter.full_name || 'Approved voter'}</td>
-                      <td>{voter.matric || 'N/A'}</td>
-                      <td>{voter.department || 'N/A'}</td>
-                      <td>{compactDate(request.created_at)}</td>
-                      <td><span className={`badge capitalize ${statusBadgeClass(request.status)}`}>{request.status}</span></td>
-                      <td>
-                        <div className="flex flex-wrap gap-2">
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate">{voter.full_name || 'Approved voter'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.matric || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[180px] truncate">{voter.department || 'N/A'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{compactDate(request.created_at)}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(request.status)}`}>{request.status}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2 whitespace-nowrap">
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
                         </div>
@@ -859,6 +860,7 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[180px]" /><col className="w-[240px]" /><col className="w-[130px]" /><col className="w-[320px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -869,13 +871,13 @@ export default function Admin({ data }) {
                 )}
                 {!dataLoading && recentVoters.map((voter) => (
                   <tr key={voter.id}>
-                    <td><div className="font-semibold">{voter.full_name}</div><div className="text-xs text-slate-500">{voter.level || 'Level not set'}</div></td>
-                    <td className="font-mono text-xs">{voter.matric}</td>
-                    <td>{voter.department || 'N/A'}</td>
-                    <td className="max-w-[190px] truncate">{voter.email || 'N/A'}</td>
-                    <td><span className={`badge capitalize ${voter.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : voter.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{voter.status}</span></td>
-                    <td>
-                      <div className="flex justify-end gap-2">
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate font-semibold">{voter.full_name}</div><div className="text-xs text-slate-500">{voter.level || 'Level not set'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap font-mono text-xs">{voter.matric}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.department || 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap max-w-[240px] truncate">{voter.email || 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${voter.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : voter.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{voter.status}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
                         <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)} title={canDeleteVoters ? 'Remove voter' : 'Delete is disabled after election starts'}><Trash2 size={15} />Remove</button>
@@ -925,6 +927,7 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
+              <colgroup><col className="w-[210px]" /><col className="w-[200px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[100px]" /><col className="w-[420px]" /></colgroup>
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -935,16 +938,16 @@ export default function Admin({ data }) {
                 )}
                 {!dataLoading && recentCandidateRows.map((row) => (
                   <tr key={row.row_id}>
-                    <td><div className="font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
-                    <td>{positionLabel(row.position_id)}</td>
-                    <td>{row.department || 'N/A'}</td>
-                    <td>{row.level || 'N/A'}</td>
-                    <td>{row.cgpa || 'N/A'}</td>
-                    <td><span className={`badge capitalize ${row.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : row.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{row.status || 'pending'}</span></td>
-                    <td>{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</td>
-                    <td><span className="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
-                    <td>
-                      <div className="flex justify-end gap-2">
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{positionLabel(row.position_id)}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${row.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : row.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{row.status || 'pending'}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
@@ -1022,19 +1025,20 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
                 <table className="table admin-wide-table table-fixed">
+                <colgroup><col className="w-[210px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[240px]" /><col className="w-[130px]" /><col className="w-[320px]" /></colgroup>
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
                   {filteredVoters.length === 0 && <tr><td colSpan={7}><div className="py-8 text-center text-sm text-slate-500">No voters match these filters.</div></td></tr>}
                   {pagedVoters.map((voter) => (
                     <tr key={voter.id}>
-                      <td className="font-semibold">{voter.full_name}</td>
-                      <td className="font-mono text-xs">{voter.matric}</td>
-                      <td>{voter.department || 'N/A'}</td>
-                      <td>{voter.level || 'N/A'}</td>
-                      <td>{voter.email || 'N/A'}</td>
-                      <td><span className={`badge capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
-                      <td>
-                        <div className="flex justify-end gap-2">
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{voter.full_name}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap font-mono text-xs">{voter.matric}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.department || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.level || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap max-w-[240px] truncate">{voter.email || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2 whitespace-nowrap">
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
                           <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)}><Trash2 size={15} />Remove</button>
@@ -1130,21 +1134,22 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
                 <table className="table admin-wide-table table-fixed">
+                <colgroup><col className="w-[210px]" /><col className="w-[200px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[100px]" /><col className="w-[420px]" /></colgroup>
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
                 <tbody>
                   {filteredCandidateRows.length === 0 && <tr><td colSpan={9}><div className="py-8 text-center text-sm text-slate-500">No candidates match these filters.</div></td></tr>}
                   {pagedCandidateRows.map((row) => (
                     <tr key={row.row_id}>
-                      <td><div className="font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
-                      <td>{positionLabel(row.position_id)}</td>
-                      <td>{row.department || 'N/A'}</td>
-                      <td>{row.level || 'N/A'}</td>
-                      <td>{row.cgpa || 'N/A'}</td>
-                      <td><span className={`badge capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
-                      <td>{compactDate(row.submitted_at)}</td>
-                      <td><span className="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
-                      <td>
-                        <div className="flex justify-end gap-2">
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{positionLabel(row.position_id)}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">{compactDate(row.submitted_at)}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap">
+                        <div className="flex items-center gap-2 whitespace-nowrap">
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
                           <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
