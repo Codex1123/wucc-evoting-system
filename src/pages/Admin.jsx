@@ -935,11 +935,11 @@ export default function Admin({ data }) {
           </div>
           <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full max-w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-              <table className="table admin-wide-table min-w-[1200px] table-fixed">
-              <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[180px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+              <table className="table admin-wide-table min-w-[1400px] w-full table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[180px]" /><col className="w-[200px]" /><col className="w-[100px]" /><col className="w-[80px]" /><col className="w-[140px]" /><col className="w-[200px]" /><col className="w-[130px]" /><col className="w-[420px]" /></colgroup>
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -950,13 +950,13 @@ export default function Admin({ data }) {
                 )}
                 {!dataLoading && recentCandidateRows.map((row) => (
                   <tr key={row.row_id}>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{positionLabel(row.position_id)}</div></td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate font-semibold">{row.full_name}</div><div className="max-w-[220px] truncate font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[180px] truncate">{positionLabel(row.position_id)}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{row.department || 'N/A'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap">{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex shrink-0 whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
                       <div className="flex items-center gap-3 whitespace-nowrap">
@@ -1142,23 +1142,23 @@ export default function Admin({ data }) {
             </div>
             <div className="hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full max-w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100%' }}
             >
-                <table className="table admin-wide-table min-w-[1200px] table-fixed">
-                <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[180px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+                <table className="table admin-wide-table min-w-[1400px] w-full table-fixed">
+                <colgroup><col className="w-[220px]" /><col className="w-[180px]" /><col className="w-[200px]" /><col className="w-[100px]" /><col className="w-[80px]" /><col className="w-[140px]" /><col className="w-[200px]" /><col className="w-[130px]" /><col className="w-[420px]" /></colgroup>
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
                 <tbody>
                   {filteredCandidateRows.length === 0 && <tr><td colSpan={9}><div className="py-8 text-center text-sm text-slate-500">No candidates match these filters.</div></td></tr>}
                   {pagedCandidateRows.map((row) => (
                     <tr key={row.row_id}>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{row.full_name}</div><div className="font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{positionLabel(row.position_id)}</div></td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate font-semibold">{row.full_name}</div><div className="max-w-[220px] truncate font-mono text-xs text-slate-500">{row.matric || 'N/A'}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[180px] truncate">{positionLabel(row.position_id)}</div></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{row.department || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap">{compactDate(row.submitted_at)}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[200px] truncate">{compactDate(row.submitted_at)}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex shrink-0 whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">
                         <div className="flex items-center gap-3 whitespace-nowrap">
