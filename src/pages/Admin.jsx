@@ -644,16 +644,17 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[300px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Email</th><th>Department</th><th>Action</th></tr></thead>
               <tbody>
                 {pendingVoters.map((voter) => (
                   <tr key={voter.id}>
-                    <td>{voter.full_name}</td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate font-semibold">{voter.full_name}</div></td>
                     <td>{voter.matric}</td>
-                    <td>{voter.email}</td>
-                    <td>{voter.department}</td>
-                    <td>
-                      <div className="flex flex-wrap items-center gap-2">
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap">
+                      <div className="flex items-center gap-2 whitespace-nowrap">
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
                       </div>
@@ -703,7 +704,7 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[210px]" /><col className="w-[130px]" /><col className="w-[180px]" /><col className="w-[170px]" /><col className="w-[130px]" /><col className="w-[260px]" /></colgroup>
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[170px]" /><col className="w-[140px]" /><col className="w-[300px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
@@ -860,8 +861,8 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[180px]" /><col className="w-[240px]" /><col className="w-[130px]" /><col className="w-[320px]" /></colgroup>
-              <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[200px]" /><col className="w-[240px]" /><col className="w-[140px]" /><col className="w-[340px]" /></colgroup>
+              <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
                   <tr><td colSpan={6}><div className="flex items-center gap-2 text-slate-500"><Loader2 className="animate-spin" size={16} />Loading voters...</div></td></tr>
@@ -873,9 +874,9 @@ export default function Admin({ data }) {
                   <tr key={voter.id}>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate font-semibold">{voter.full_name}</div><div className="text-xs text-slate-500">{voter.level || 'Level not set'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap font-mono text-xs">{voter.matric}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.department || 'N/A'}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap max-w-[240px] truncate">{voter.email || 'N/A'}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${voter.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : voter.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{voter.status}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email || 'N/A'}</div></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
                       <div className="flex items-center gap-2 whitespace-nowrap">
                         <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
@@ -927,8 +928,8 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
               <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[210px]" /><col className="w-[200px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[100px]" /><col className="w-[420px]" /></colgroup>
-              <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
+              <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[170px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+              <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
                   <tr><td colSpan={9}><div className="flex items-center gap-2 text-slate-500"><Loader2 className="animate-spin" size={16} />Loading candidates...</div></td></tr>
@@ -943,7 +944,7 @@ export default function Admin({ data }) {
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${row.status === 'approved' ? 'bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100' : row.status === 'rejected' ? 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-100' : 'bg-amber-50 text-amber-700 dark:bg-amber-950 dark:text-amber-100'}`}>{row.status || 'pending'}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
@@ -1025,17 +1026,17 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
                 <table className="table admin-wide-table table-fixed">
-                <colgroup><col className="w-[210px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[240px]" /><col className="w-[130px]" /><col className="w-[320px]" /></colgroup>
-                <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th className="text-right">Actions</th></tr></thead>
+                <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[240px]" /><col className="w-[140px]" /><col className="w-[340px]" /></colgroup>
+                <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>
                   {filteredVoters.length === 0 && <tr><td colSpan={7}><div className="py-8 text-center text-sm text-slate-500">No voters match these filters.</div></td></tr>}
                   {pagedVoters.map((voter) => (
                     <tr key={voter.id}>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[210px] truncate font-semibold">{voter.full_name}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap font-mono text-xs">{voter.matric}</td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.department || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.level || 'N/A'}</td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap max-w-[240px] truncate">{voter.email || 'N/A'}</td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">
                         <div className="flex items-center gap-2 whitespace-nowrap">
@@ -1134,8 +1135,8 @@ export default function Admin({ data }) {
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
                 <table className="table admin-wide-table table-fixed">
-                <colgroup><col className="w-[210px]" /><col className="w-[200px]" /><col className="w-[170px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[130px]" /><col className="w-[170px]" /><col className="w-[100px]" /><col className="w-[420px]" /></colgroup>
-                <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th className="text-right">Actions</th></tr></thead>
+                <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[170px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+                <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
                 <tbody>
                   {filteredCandidateRows.length === 0 && <tr><td colSpan={9}><div className="py-8 text-center text-sm text-slate-500">No candidates match these filters.</div></td></tr>}
                   {pagedCandidateRows.map((row) => (
