@@ -567,7 +567,7 @@ export default function Admin({ data }) {
                   <td>{block.confirmation_count || 0}/5</td>
                   <td><span className="badge bg-emerald-50 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-100">{block.validation_status || 'pbft_confirmed'}</span></td>
                   <td>{compactDate(block.created_at)}</td>
-                  <td><button className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setSelectedBlock(block)}><Eye size={15} />View</button></td>
+                  <td><button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" onClick={() => setSelectedBlock(block)}><Eye size={15} />View</button></td>
                 </tr>
               )) : (
                 <tr><td colSpan={8}><div className="py-6 text-center text-sm text-slate-500">No ledger blocks found.</div></td></tr>
@@ -578,8 +578,8 @@ export default function Admin({ data }) {
         <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
           <span className="text-slate-500 dark:text-slate-400">Page {ledgerPage} of {ledgerPageCount}</span>
           <div className="flex gap-2">
-            <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={ledgerPage <= 1} onClick={() => setLedgerPage((page) => Math.max(1, page - 1))}>Previous</button>
-            <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={ledgerPage >= ledgerPageCount} onClick={() => setLedgerPage((page) => Math.min(ledgerPageCount, page + 1))}>Next</button>
+            <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={ledgerPage <= 1} onClick={() => setLedgerPage((page) => Math.max(1, page - 1))}>Previous</button>
+            <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={ledgerPage >= ledgerPageCount} onClick={() => setLedgerPage((page) => Math.min(ledgerPageCount, page + 1))}>Next</button>
           </div>
         </div>
       </div>
@@ -631,8 +631,8 @@ export default function Admin({ data }) {
                   <MobileDetail label="Status" value={request.status} />
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
                 </div>
               </div>
               );
@@ -640,11 +640,11 @@ export default function Admin({ data }) {
           </div>
           <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-              <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[300px]" /></colgroup>
+              <table className="table admin-wide-table min-w-[1200px] table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[320px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Email</th><th>Department</th><th>Action</th></tr></thead>
               <tbody>
                 {pendingVoters.map((voter) => (
@@ -654,9 +654,9 @@ export default function Admin({ data }) {
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                      <div className="flex items-center gap-3 whitespace-nowrap">
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
                       </div>
                     </td>
                   </tr>
@@ -692,19 +692,19 @@ export default function Admin({ data }) {
                   <MobileDetail label="Status" value={voter.status} />
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
                 </div>
               </div>
             ))}
           </div>
           <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-              <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[170px]" /><col className="w-[140px]" /><col className="w-[300px]" /></colgroup>
+              <table className="table admin-wide-table min-w-[1200px] table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[220px]" /><col className="w-[180px]" /><col className="w-[140px]" /><col className="w-[320px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Requested</th><th>Status</th><th>Action</th></tr></thead>
               <tbody>
                 {passwordResetRequests.slice(0, 10).map((request) => {
@@ -715,11 +715,11 @@ export default function Admin({ data }) {
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.matric || 'N/A'}</td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[180px] truncate">{voter.department || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{compactDate(request.created_at)}</td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(request.status)}`}>{request.status}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(request.status)}`}>{request.status}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-2 whitespace-nowrap">
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
+                        <div className="flex items-center gap-3 whitespace-nowrap">
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => openPasswordResetApproval(request)}><Check size={15} />Approve</button>
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy || request.status !== 'pending'} onClick={() => run(() => rejectPasswordResetRequest(request), 'Password reset request rejected.')}><X size={15} />Reject</button>
                         </div>
                       </td>
                     </tr>
@@ -834,7 +834,7 @@ export default function Admin({ data }) {
             <h2 className="text-lg font-bold">Voters</h2>
             <div className="flex flex-wrap items-center gap-2">
               <span className="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{voters.length} records</span>
-              <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('voters')}><Eye size={15} />View all voters</button>
+              <button type="button" className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" onClick={() => setFullView('voters')}><Eye size={15} />View all voters</button>
             </div>
           </div>
           <div className="space-y-3 md:hidden">
@@ -849,18 +849,18 @@ export default function Admin({ data }) {
                   <MobileDetail label="Status" value={voter.status} />
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
                 </div>
               </div>
             ))}
           </div>
           <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-              <table className="table admin-wide-table table-fixed">
+              <table className="table admin-wide-table min-w-[1200px] table-fixed">
               <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[200px]" /><col className="w-[240px]" /><col className="w-[140px]" /><col className="w-[340px]" /></colgroup>
               <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
               <tbody>
@@ -876,12 +876,12 @@ export default function Admin({ data }) {
                     <td className="px-4 py-4 align-middle whitespace-nowrap font-mono text-xs">{voter.matric}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department || 'N/A'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email || 'N/A'}</div></td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
-                        <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)} title={canDeleteVoters ? 'Remove voter' : 'Delete is disabled after election starts'}><Trash2 size={15} />Remove</button>
+                      <div className="flex items-center gap-3 whitespace-nowrap">
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
+                        <button className="btn-danger min-h-9 shrink-0 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)} title={canDeleteVoters ? 'Remove voter' : 'Delete is disabled after election starts'}><Trash2 size={15} />Remove</button>
                       </div>
                     </td>
                   </tr>
@@ -901,7 +901,7 @@ export default function Admin({ data }) {
             <h2 className="text-lg font-bold">Candidate management</h2>
             <div className="flex flex-wrap items-center gap-2">
               <span className="badge bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{candidateRows.length} total</span>
-              <button type="button" className="btn-secondary min-h-9 px-3 py-1.5" onClick={() => setFullView('candidates')}><Eye size={15} />View all candidates</button>
+              <button type="button" className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" onClick={() => setFullView('candidates')}><Eye size={15} />View all candidates</button>
             </div>
           </div>
           <div className="space-y-3 md:hidden">
@@ -916,19 +916,19 @@ export default function Admin({ data }) {
                   <MobileDetail label="Status" value={voter.status} />
                 </div>
                 <div className="mt-3 grid grid-cols-2 gap-2">
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
-                  <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter registration approved.')}><Check size={15} />Approve</button>
+                  <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter registration rejected.')}><X size={15} />Reject</button>
                 </div>
               </div>
             ))}
           </div>
           <div className="hidden w-full max-w-full overflow-hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-              <table className="table admin-wide-table table-fixed">
-              <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[170px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+              <table className="table admin-wide-table min-w-[1200px] table-fixed">
+              <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[180px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
               <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
               <tbody>
                 {dataLoading && (
@@ -944,15 +944,15 @@ export default function Admin({ data }) {
                     <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">{row.submitted_at ? new Date(row.submitted_at).toLocaleString() : 'N/A'}</td>
-                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
+                    <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex shrink-0 whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
                     <td className="px-4 py-4 align-middle whitespace-nowrap">
-                      <div className="flex items-center gap-2 whitespace-nowrap">
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
-                        <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
-                        <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)} title={canDeleteCandidates ? 'Remove candidate' : 'Delete is disabled after election starts'}><Trash2 size={15} />Remove</button>
+                      <div className="flex items-center gap-3 whitespace-nowrap">
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
+                        <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
+                        <button className="btn-danger min-h-9 shrink-0 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)} title={canDeleteCandidates ? 'Remove candidate' : 'Delete is disabled after election starts'}><Trash2 size={15} />Remove</button>
                       </div>
                     </td>
                   </tr>
@@ -1013,8 +1013,8 @@ export default function Admin({ data }) {
                     <MobileDetail label="Status" value={voter.status} />
                   </div>
                   <div className="mt-3 grid grid-cols-2 gap-2">
-                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
-                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
+                    <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
+                    <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
                     <button className="btn-danger col-span-2 min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)}><Trash2 size={15} />Remove</button>
                   </div>
                 </div>
@@ -1022,10 +1022,10 @@ export default function Admin({ data }) {
             </div>
             <div className="hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-                <table className="table admin-wide-table table-fixed">
+                <table className="table admin-wide-table min-w-[1200px] table-fixed">
                 <colgroup><col className="w-[220px]" /><col className="w-[130px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[240px]" /><col className="w-[140px]" /><col className="w-[340px]" /></colgroup>
                 <thead><tr><th>Name</th><th>Matric</th><th>Department</th><th>Level</th><th>Email</th><th>Status</th><th>Actions</th></tr></thead>
                 <tbody>
@@ -1037,12 +1037,12 @@ export default function Admin({ data }) {
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.department || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{voter.level || 'N/A'}</td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[220px] truncate">{voter.email || 'N/A'}</div></td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(voter.status)}`}>{voter.status}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-2 whitespace-nowrap">
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
-                          <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)}><Trash2 size={15} />Remove</button>
+                        <div className="flex items-center gap-3 whitespace-nowrap">
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'approved'), 'Voter approved.')}><Check size={15} />Approve</button>
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!perms.canManageVoters || busy} onClick={() => run(() => updateVoterStatusWithReason(voter.id, 'rejected'), 'Voter rejected.')}><X size={15} />Reject</button>
+                          <button className="btn-danger min-h-9 shrink-0 px-3 py-1.5" disabled={!canDeleteVoters} onClick={() => requestDelete('voter', voter)}><Trash2 size={15} />Remove</button>
                         </div>
                       </td>
                     </tr>
@@ -1058,8 +1058,8 @@ export default function Admin({ data }) {
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {voterPage} of {voterPageCount}</span>
               <div className="flex gap-2">
-                <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={voterPage <= 1} onClick={() => setVoterPage((page) => Math.max(1, page - 1))}>Previous</button>
-                <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={voterPage >= voterPageCount} onClick={() => setVoterPage((page) => Math.min(voterPageCount, page + 1))}>Next</button>
+                <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={voterPage <= 1} onClick={() => setVoterPage((page) => Math.max(1, page - 1))}>Previous</button>
+                <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={voterPage >= voterPageCount} onClick={() => setVoterPage((page) => Math.min(voterPageCount, page + 1))}>Next</button>
               </div>
             </div>
           </div>
@@ -1121,21 +1121,21 @@ export default function Admin({ data }) {
                     <MobileDetail label="Source" value={row.source} />
                   </div>
                   <div className="mt-3 grid grid-cols-2 gap-2">
-                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
-                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
-                    <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
-                    <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)}><Trash2 size={15} />Remove</button>
+                    <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
+                    <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
+                    <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
+                    <button className="btn-danger min-h-9 shrink-0 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)}><Trash2 size={15} />Remove</button>
                   </div>
                 </div>
               ))}
             </div>
             <div className="hidden md:block">
             <div
-              className="admin-table-scroll w-full overflow-x-scroll overflow-y-hidden rounded-xl border border-slate-700"
+              className="admin-table-scroll w-full overflow-x-auto overflow-y-hidden rounded-xl border border-slate-700"
               style={{ WebkitOverflowScrolling: 'touch', touchAction: 'pan-x', maxWidth: '100vw' }}
             >
-                <table className="table admin-wide-table table-fixed">
-                <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[170px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
+                <table className="table admin-wide-table min-w-[1200px] table-fixed">
+                <colgroup><col className="w-[220px]" /><col className="w-[220px]" /><col className="w-[200px]" /><col className="w-[90px]" /><col className="w-[90px]" /><col className="w-[140px]" /><col className="w-[180px]" /><col className="w-[110px]" /><col className="w-[360px]" /></colgroup>
                 <thead><tr><th>Name</th><th>Position</th><th>Department</th><th>Level</th><th>CGPA</th><th>Status</th><th>Submitted</th><th>Source</th><th>Actions</th></tr></thead>
                 <tbody>
                   {filteredCandidateRows.length === 0 && <tr><td colSpan={9}><div className="py-8 text-center text-sm text-slate-500">No candidates match these filters.</div></td></tr>}
@@ -1146,15 +1146,15 @@ export default function Admin({ data }) {
                       <td className="px-4 py-4 align-middle whitespace-nowrap"><div className="max-w-[170px] truncate">{row.department || 'N/A'}</div></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{row.level || 'N/A'}</td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{row.cgpa || 'N/A'}</td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className={`badge inline-flex shrink-0 whitespace-nowrap capitalize ${statusBadgeClass(row.status)}`}>{row.status || 'pending'}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">{compactDate(row.submitted_at)}</td>
-                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
+                      <td className="px-4 py-4 align-middle whitespace-nowrap"><span className="badge inline-flex shrink-0 whitespace-nowrap bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200">{row.source}</span></td>
                       <td className="px-4 py-4 align-middle whitespace-nowrap">
-                        <div className="flex items-center gap-2 whitespace-nowrap">
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
-                          <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
-                          <button className="btn-danger min-h-9 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)}><Trash2 size={15} />Remove</button>
+                        <div className="flex items-center gap-3 whitespace-nowrap">
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={busy} onClick={() => setReviewRowId(row.row_id)}><Eye size={15} />View</button>
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'approved'), 'Candidate approved.')}><Check size={15} />Approve</button>
+                          <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={!canApproveCandidateActions} onClick={() => run(() => updateCandidateRowStatus(row, 'rejected'), 'Candidate rejected.')}><X size={15} />Reject</button>
+                          <button className="btn-danger min-h-9 shrink-0 px-3 py-1.5" disabled={!canDeleteCandidates} onClick={() => requestDelete('candidate', row)}><Trash2 size={15} />Remove</button>
                         </div>
                       </td>
                     </tr>
@@ -1170,8 +1170,8 @@ export default function Admin({ data }) {
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm">
               <span className="text-slate-500 dark:text-slate-400">Page {candidatePage} of {candidatePageCount}</span>
               <div className="flex gap-2">
-                <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={candidatePage <= 1} onClick={() => setCandidatePage((page) => Math.max(1, page - 1))}>Previous</button>
-                <button className="btn-secondary min-h-9 px-3 py-1.5" disabled={candidatePage >= candidatePageCount} onClick={() => setCandidatePage((page) => Math.min(candidatePageCount, page + 1))}>Next</button>
+                <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={candidatePage <= 1} onClick={() => setCandidatePage((page) => Math.max(1, page - 1))}>Previous</button>
+                <button className="btn-secondary min-h-9 shrink-0 px-3 py-1.5" disabled={candidatePage >= candidatePageCount} onClick={() => setCandidatePage((page) => Math.min(candidatePageCount, page + 1))}>Next</button>
               </div>
             </div>
           </div>
